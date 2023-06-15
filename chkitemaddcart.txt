@@ -1,0 +1,33 @@
+package selenium;
+
+import java.net.URL;
+import java.net.MalformedURLException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+public class App {
+    public static void main(String[] args) throws MalformedURLException {
+        RemoteWebDriver driver;
+        ChromeOptions chromeOptions = new ChromeOptions();
+        driver = new RemoteWebDriver(new URL("http://localhost:4444"), chromeOptions);
+
+        //Fill the code
+        
+        driver.get("https://www.jiomart.com/");
+        driver.manage().window().maximize();
+        String pageTitle = driver.getTitle();
+        System.out.println("Page Title: " + pageTitle);
+        WebElement addToCartButton = driver.findElement(By.xpath("//button[@data-testid='add-to-cart-button']"));
+        addToCartButton.click();
+        WebElement cartButton = driver.findElement(By.xpath("//a[@data-testid='header-cart-button']"));
+        boolean isItemAddedToCart = cartButton.isDisplayed();
+        System.out.println("Is Item Added to Cart: " + isItemAddedToCart);
+        WebElement saveToShoppingListButton = driver.findElement(By.xpath("//button[@data-testid='save-button']"));
+        saveToShoppingListButton.click();
+        
+        driver.quit();
+    }
+}
